@@ -1,0 +1,41 @@
+<link rel="import" href="../polymer/polymer.html" />
+
+<dom-module id="my-element">
+    <template>
+        Hi! {{model.name}}
+    </template>
+    <script>
+        
+        // doesn't work
+        // class MyElement extends Polymer.Element {
+
+        //works
+        class MyElement extends Polymer.MutableData(Polymer.Element) {
+
+            static get is() { return 'my-element'; }
+            constructor() {
+                super();
+                console.log('my-element was created!');
+            }
+        }
+        // Register custom element class with browser
+        customElements.define('my-element', MyElement);
+    </script>
+</dom-module>
+
+
+
+<my-element>
+
+</my-element>
+
+<script>
+    const model = { name: "omar" };
+    const el = document.querySelector('my-element');
+    el.model = model;
+
+    setTimeout(() => {
+        model.name = "Ali"
+        el.notifyPath('model')
+    })
+</script>
